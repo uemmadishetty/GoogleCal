@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Google Calendar Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        textarea,
+        #generated-link {
+            height: 100px;
+        }
+    </style>
+    <script>
+        // JavaScript code here
+    </script>
+</head>
+<body>
+    <h1>Create Google Calendar Event</h1>
+    <label for="summary">Summary:</label>
+    <input type="text" id="summary">
+
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date">
+
+    <label for="start-time">Start Time:</label>
+    <input type="time" id="start-time">
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date">
+
+    <label for="end-time">End Time:</label>
+    <input type="time" id="end-time">
+
+    <label for="description">Description:</label>
+    <textarea id="description"></textarea>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location">
+
+    <button onclick="generateGoogleCalendarLink()">Generate Link</button>
+
+    <label for="generated-link">Generated Link:</label>
+    <textarea id="generated-link" readonly></textarea>
+</body>
+</html>
