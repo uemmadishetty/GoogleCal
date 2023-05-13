@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Google Calendar Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+        }
+
+        .form-group .input-field {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .input-field label {
+            flex-basis: 25%;
+            margin-right: 5%;
+        }
+
+        .form-group .input-field input[type="text"],
+        .form-group .input-field input[type="date"],
+        .form-group .input-field input[type="time"],
+        .form-group .input-field textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-group .input-field textarea {
+            height: 150px;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button-group button:hover {
+            background-color: #45a049;
+        }
+
+        #generated-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #generated-link textarea {
+            width: 100%;
+            font-size: 16px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: none;
+            height: 100px;
+        }
+    </style>
+    <script>
+        function generateGoogleCalendarLink() {
+            var summary = document.getElementById("summary").value;
+            var startDate = document.getElementById("start-date").value;
+            var startTime = document.getElementById("start-time").value;
+            var endDate = document.getElementById("end-date").value;
+            var endTime = document.getElementById("end-time").value;
+            var description = document.getElementById("description").value;
+            var location = document.getElementById("location").value;
+
+            // Convert local IST time to UTC time
+            var startDateTime = new Date(startDate + "T" + startTime + "+05:30");
+            var endDateTime = new Date(endDate + "T" + endTime + "+05:30");
+            var startUTC = startDateTime.toISOString().replace(/[:-]/g, "").slice(0, -4) + "Z";
+            var endUTC = endDateTime.toISOString().replace(/[:-]/g, "").slice(0, -4) + "Z";
+
+            var link = "https://www.google.com/calendar/render?action=TEMPLATE";
+            link += "&text=" + encodeURIComponent(summary);
+            link += "&dates=" + startUTC + "/" + endUTC;
+            link += "&details=" + encodeURIComponent(description);
+            link += "&location=" + encodeURIComponent(location);
+
+            var linkTextarea = document.createElement("textarea");
+            linkTextarea.readOnly = true;
+                        linkTextarea.className = "generated-link-textarea";
+            linkTextarea.value = link;
+
+            linkTextarea.addEventListener("click", function () {
+                this.select();
+                document.execCommand("copy");
+                alert("Link copied to clipboard!");
+            });
+
+            document.getElementById("generated-link").innerHTML = "";
+            document.getElementById("generated-link").appendChild(linkTextarea);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Create Google Calendar Event</h1>
+        <div class="form-group">
+            <label for="summary">Webinar Title:</label>
+            <input type="text" id="summary" style="width: 100%; font-size: 16px; padding: 12px; border-radius: 4px;">
+        </div>
+
+        <div class="form-group">
+            <div class="input-field">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date">
+            </div>
+            <div class="input-field">
+                <label for="start-time">Start Time:</label>
+                <input type="time" id="start-time">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-field">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date">
+            </div>
+            <div class="input-field">
+                <label for="end-time">End Time:</label>
+                <input type="time" id="end-time">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" style="width: 100%; font-size: 16px; padding: 12px; border-radius: 4px; height: 150px;"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" style="width: 100%; font-size: 16px; padding: 12px; border-radius: 4px;">
+        </div>
+
+        <div class="button-group">
+            <button onclick="generateGoogleCalendarLink()">Generate Link</button>
+        </div>
+
+        <div id="generated-link"></div>
+    </div>
+</body>
+</html>
+
